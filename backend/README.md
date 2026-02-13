@@ -1,0 +1,29 @@
+# Backend
+
+This is is a flask using with a postgres database.
+
+## Setup Instructions
+
+1. run `python3 -m venv venv`
+1. run `source venv/bin/activate`
+1. run `pip install -r requirements.txt`
+
+## Serve/Demo Instructions
+
+See the root directory README.md. This project is mean to be run with docker-compose.
+
+## Architecture
+
+backend/
+│
+├── app/
+│   ├── __init__.py
+│   ├── models.py
+│   ├── routes.py
+│   ├── schemas.py
+│   └── config.py
+│
+├── requirements.txt
+├── run.py
+├── Dockerfile
+└── .dockerignore

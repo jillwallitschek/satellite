@@ -22,6 +22,7 @@ To test if the frontend is running visit `http://localhost:3000/` in your browse
 
 ## Initial Design Plan
 
+```text
 satellite-telemetry-dashboard/
 │
 ├── docker-compose.yml
@@ -44,6 +45,7 @@ satellite-telemetry-dashboard/
 |   └── vite.config.js
 |
 └── postgres
+```
 
 
 # Backend Requirements

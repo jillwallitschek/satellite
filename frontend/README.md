@@ -12,6 +12,7 @@ See the root directory README.md. This project is mean to be run with docker-com
 
 ## Architecture
 
+```text
 frontend/
 │
 ├── src/
@@ -25,7 +26,7 @@ frontend/
 ├── vite.config.js
 ├── Dockerfile
 └── .dockerignore
-
+```
 
 ## Infrastructure: React, TypeScript, Vite
 

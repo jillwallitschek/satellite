@@ -14,6 +14,8 @@ See the root directory README.md. This project is mean to be run with docker-com
 
 ## Architecture
 
+
+```text
 backend/
 │
 ├── app/
@@ -27,3 +29,4 @@ backend/
 ├── run.py
 ├── Dockerfile
 └── .dockerignore
+```

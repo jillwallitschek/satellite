@@ -12,8 +12,13 @@ This is is a flask using with a postgres database.
 
 See the root directory README.md. This project is mean to be run with docker-compose.
 
-## Architecture
+## Debugging tips
 
+To manually enter/query the database run `compose exec postgres psql -U postgres -d telemetry`
+
+To delete the database volume run `docker volume rm satellite_postgres_data`
+
+## Architecture
 
 ```text
 backend/

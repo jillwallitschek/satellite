@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
-import {
-  Container,
-  Typography,
-  CircularProgress,
-  Alert
-} from "@mui/material";
+import { Container, Typography, CircularProgress, Alert } from "@mui/material";
 
 import { Telemetry, TelemetryFilters } from "./types/telemetry";
 import { getTelemetry } from "./api";
 import TelemetryTable from "./components/TelemetryTable";
 import TelemetryForm from "./components/TelemetryForm";
 import FilterBar from "./components/FilterBar";
+
+//@TODO: set a mui layout/theme
 
 function App() {
   const [telemetry, setTelemetry] = useState<Telemetry[]>([]);
@@ -22,8 +19,9 @@ function App() {
     setLoading(true);
     setError(null);
     try {
-      const data = await getTelemetry(filters);
-      setTelemetry(data);
+      const response = await getTelemetry(filters);
+      setTelemetry(response.data ?? []);
+      if (!response.success) setError(response.message);
     } catch {
       setError("Failed to fetch telemetry");
     } finally {
@@ -40,7 +38,7 @@ function App() {
       <Typography variant="h4" sx={{ mt: 4 }}>
         Satellite Telemetry Dashboard
       </Typography>
-      
+
       {error && <Alert severity="error">{error}</Alert>}
 
       <FilterBar setFilters={setFilters} />

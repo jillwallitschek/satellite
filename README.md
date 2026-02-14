@@ -11,7 +11,7 @@ Note: Project was developed in WSL 2
 1. Be sure docker compose is installed using https://docs.docker.com/engine/install/ 
 1. Check docker desktop is running
 1. Copy `.env.example` to `.env` in the root directory. No need to update values. For ease of testing they are set in the example.
-1. Run `docker compose up --build` or depending on your setup `docker-compose up --build`
+1. In a new terminal run `docker compose up --build` or depending on your setup `docker-compose up --build`
 1. Visit `http://localhost:3000/` in your browser
 
 ### Debugging setup
@@ -62,15 +62,15 @@ Implement the following API endpoints:
 
 #### GET /telemetry: Retrieve all telemetry data.
 
-##### Optional query parameters:
+* Optional query parameters:
+    * satelliteId: Filter by satellite ID.
+    * status: Filter by health status (e.g., “healthy”, “critical”).
 
-* satelliteId: Filter by satellite ID.
-* status: Filter by health status (e.g., “healthy”, “critical”).
-* POST /telemetry: Add a new telemetry entry.
+#### POST /telemetry: Add a new telemetry entry.
 
-##### Request body should include:
+Request body should include:
 
-```
+```json
 {
  "satelliteId": "string",
  "timestamp": "ISO 8601 datetime",
@@ -81,7 +81,6 @@ Implement the following API endpoints:
 ```
 
 #### GET /telemetry/:id: Retrieve a specific telemetry entry by ID.
-
 
 #### DELETE /telemetry/:id: Delete a specific telemetry entry.
 

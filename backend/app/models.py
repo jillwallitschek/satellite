@@ -2,6 +2,7 @@ import uuid
 from datetime import datetime
 from . import db
 
+# schema public
 class Telemetry(db.Model):
     __tablename__ = "telemetry"
 

@@ -2,7 +2,7 @@
   // Spellcheck
   "cSpell.words": [],
   // TypeScript uses local version
-  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.tsdk": "frontend/node_modules/typescript/lib",
   // Formatting
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",

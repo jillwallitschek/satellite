@@ -1,52 +1,70 @@
-import {
-  Table, TableHead, TableRow, TableCell,
-  TableBody, IconButton
-} from "@mui/material";
+import { IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Telemetry } from "../types/telemetry";
 import { deleteTelemetry } from "../api";
+import CustomTable from "./CustomTable";
 
 type Props = {
   telemetry: Telemetry[];
   onDelete: () => void;
 };
 
-const TelemetryTable: React.FC<Props> = ({ telemetry, onDelete }) => {
+/**
+ * A table that displays telemetry data
+ * @param props
+ * @returns
+ */
+export default function TelemetryTable({ telemetry, onDelete }: Props) {
   const handleDelete = async (id: string) => {
     await deleteTelemetry(id);
     onDelete();
   };
 
   return (
-    <Table sx={{ mt: 4 }}>
-      <TableHead>
-        <TableRow>
-          <TableCell>Satellite ID</TableCell>
-          <TableCell>Timestamp</TableCell>
-          <TableCell>Altitude</TableCell>
-          <TableCell>Velocity</TableCell>
-          <TableCell>Status</TableCell>
-          <TableCell />
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {telemetry.map((row) => (
-          <TableRow key={row.id}>
-            <TableCell>{row.satelliteId}</TableCell>
-            <TableCell>{new Date(row.timestamp).toLocaleString()}</TableCell>
-            <TableCell>{row.altitude}</TableCell>
-            <TableCell>{row.velocity}</TableCell>
-            <TableCell>{row.status}</TableCell>
-            <TableCell>
-              <IconButton onClick={() => handleDelete(row.id)}>
-                <DeleteIcon />
-              </IconButton>
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <CustomTable
+      headerCells={[
+        {
+          id: "satelliteId",
+          dataType: "string",
+          label: "Satellite id",
+        },
+        {
+          id: "timestamp",
+          dataType: "date",
+          label: "Timestamp",
+        },
+        {
+          id: "altitude",
+          dataType: "number",
+          label: "Altitude",
+        },
+        {
+          id: "velocity",
+          dataType: "number",
+          label: "Velocity",
+        },
+        {
+          id: "status",
+          dataType: "string",
+          label: "Health",
+        },
+        {
+          id: "actions",
+          dataType: "reactNode",
+          label: "",
+        },
+      ]}
+      defaultOrder="satelliteId"
+      defaultOrderDirection="desc"
+      rows={telemetry.map((t) => ({
+        ...t,
+        rowId: t.id,
+        actions: (
+          <IconButton onClick={() => handleDelete(t.id)}>
+            <DeleteIcon />
+          </IconButton>
+        ),
+      }))}
+    ></CustomTable>
   );
-};
-
-export default TelemetryTable;
+}

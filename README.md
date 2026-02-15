@@ -3,7 +3,7 @@
 A system to display and manage telemetry data from satellites. Telemetry data includes information such as satellite ID, timestamp, altitude, velocity, and
 health status. The system allows users to view, filter, and add new telemetry entries.
 
-## Serving Instructions
+## Serving Instructions (How To Test)
 
 Note: Project was developed in WSL 2
 

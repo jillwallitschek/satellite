@@ -6,6 +6,7 @@ import { getTelemetry } from "./api";
 import TelemetryTable from "./components/TelemetryTable";
 import TelemetryForm from "./components/TelemetryForm";
 import FilterBar from "./components/FilterBar";
+import CustomThemeProvider from "./theme/CustomThemeProvider";
 
 //@TODO: set a mui layout/theme
 
@@ -34,20 +35,22 @@ function App() {
   }, [filters]);
 
   return (
-    <Container>
-      <Typography variant="h4" sx={{ mt: 4 }}>
-        Satellite Telemetry Dashboard
-      </Typography>
+    <CustomThemeProvider>
+      <Container>
+        <Typography variant="h4" sx={{ mt: 4 }}>
+          Satellite Telemetry Dashboard
+        </Typography>
 
-      {error && <Alert severity="error">{error}</Alert>}
+        {error && <Alert severity="error">{error}</Alert>}
 
-      <FilterBar setFilters={setFilters} />
-      <TelemetryForm onSuccess={fetchTelemetry} />
+        <FilterBar setFilters={setFilters} />
+        <TelemetryForm onSuccess={fetchTelemetry} />
 
-      {loading && <CircularProgress />}
+        {loading && <CircularProgress />}
 
-      <TelemetryTable telemetry={telemetry} onDelete={fetchTelemetry} />
-    </Container>
+        <TelemetryTable telemetry={telemetry} onDelete={fetchTelemetry} />
+      </Container>
+    </CustomThemeProvider>
   );
 }
 

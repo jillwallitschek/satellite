@@ -1,5 +1,5 @@
-from marshmallow import Schema, fields, validates, ValidationError
-from datetime import datetime
+from marshmallow import Schema, fields, validates, ValidationError, post_dump
+from datetime import datetime, timezone
 
 class TelemetrySchema(Schema):
     id = fields.UUID(dump_only=True)
@@ -28,3 +28,25 @@ class TelemetrySchema(Schema):
     def validate_timestamp(self, value):
         if value.tzinfo is None:
             raise ValidationError("Timestamp must include timezone (ISO 8601)")
+
+    @post_dump
+    def force_iso_z(self, data, **kwargs):
+        """
+        Convert timestamp to strict ISO 8601 UTC with Z suffix.
+        Marshmallow may have already converted datetime to string,
+        so handle both datetime and string types.
+        """
+        ts = data.get("timestamp")
+        if isinstance(ts, datetime):
+            ts_utc = ts.astimezone(timezone.utc)
+            data["timestamp"] = ts_utc.isoformat(timespec="microseconds").replace("+00:00", "Z")
+        elif isinstance(ts, str):
+            # parse back and force Z
+            try:
+                dt = datetime.fromisoformat(ts.replace("Z", "+00:00"))
+                dt_utc = dt.astimezone(timezone.utc)
+                data["timestamp"] = dt_utc.isoformat(timespec="microseconds").replace("+00:00", "Z")
+            except Exception:
+                # fallback: leave as-is
+                pass
+        return data

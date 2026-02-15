@@ -14,7 +14,7 @@ See the root directory README.md. This project is mean to be run with docker-com
 
 ## Debugging tips
 
-To manually enter/query the database run `compose exec postgres psql -U postgres -d telemetry`
+To manually enter/query the database run `docker compose exec postgres psql -U postgres -d telemetry`
 
 To delete the database volume run `docker volume rm satellite_postgres_data`
 

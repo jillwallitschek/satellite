@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Container, Typography, CircularProgress, Alert } from "@mui/material";
 
 import { Telemetry, TelemetryFilters } from "./types/telemetry";
-import { getTelemetry } from "./api";
+import { addTelemetry, getTelemetry } from "./api";
 import TelemetryTable from "./components/TelemetryTable";
 import TelemetryForm from "./components/TelemetryForm";
 import FilterBar from "./components/FilterBar";

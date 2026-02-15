@@ -47,6 +47,13 @@ export const getTelemetry = async (
 export const addTelemetry = async (
   data: Omit<Telemetry, "id">,
 ): Promise<Response<Telemetry>> => {
+  const formatted = TelemetrySchema.omit({ id: true }).safeParse(data);
+  if (!formatted.success) {
+    return {
+      success: false,
+      message: "Invalid data provided",
+    };
+  }
   const response = await API.post("/telemetry", data);
   if (response.status !== 201) {
     return {

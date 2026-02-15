@@ -58,6 +58,24 @@ satellite-telemetry-dashboard/
 └── postgres
 ```
 
+### Running the project
+
+1. Docker compose will make it quick and easy for any developer to set up and run the project regardless of environment without additional configuration.
+
+### Backend
+
+1. Flask is easy simple REST API framework.
+2. SQLAlchemy ORM for database operations - maps Python objects to PostgreSQL tables.
+3. Marshmallow Input validation and JSON serialization for consistent API responses.
+4. Docker will make it easy for any developer to setup and run the react project.
+
+### Frontend
+
+1. React and MUI make it easy to set light and dark themes and use pre-designed components so we can focus on the satellite feature requests rather than styling.
+2. Vite is standard for serving react projects
+3. Vitest good for testing
+4. Docker will make it easy for any developer to setup and run the react project.
+
 # Backend Requirements
 
 ## Objective

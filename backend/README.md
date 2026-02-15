@@ -4,6 +4,7 @@ This is is a flask using with a postgres database.
 
 ## Setup Instructions
 
+1. If doing a lot of backend development, open `backend` dir as root directory
 1. run `python3 -m venv venv`
 1. run `source venv/bin/activate`
 1. run `pip install -r requirements.txt`

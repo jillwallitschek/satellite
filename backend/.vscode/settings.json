@@ -1,0 +1,17 @@
+{
+  //To lint: open backend as root directory
+  // Python interpreter
+  "python.pythonPath": "venv/bin/python",
+
+  // Linting
+  "python.linting.enabled": true,
+  "python.linting.flake8Enabled": true,
+  "python.linting.mypyEnabled": true,
+
+  // Formatting
+  "python.formatting.provider": "black",
+  "editor.formatOnSave": true,
+
+  // Optional: auto-sort imports with isort
+  "python.sortImports.args": ["--profile", "black"]
+}

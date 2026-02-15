@@ -8,11 +8,22 @@ health status. The system allows users to view, filter, and add new telemetry en
 Note: Project was developed in WSL 2
 
 1. Be sure docker is installed using https://docs.docker.com/compose/install/
-1. Be sure docker compose is installed using https://docs.docker.com/engine/install/ 
+1. Be sure docker compose is installed using https://docs.docker.com/engine/install/
 1. Check docker desktop is running
 1. Copy `.env.example` to `.env` in the root directory. No need to update values. For ease of testing they are set in the example.
 1. In a new terminal run `docker compose up --build` or depending on your setup `docker-compose up --build`
 1. Visit `http://localhost:3000/` in your browser
+
+## Developer environment
+
+VSCode Required Extensions:
+
+1. Prettier
+2. Stylelint
+3. ESlint
+4. Code Spell Checker
+
+Note: if serving in WSL, be sure you have installed them in WSL:Ubuntu rather than Local
 
 ### Debugging setup
 
@@ -47,7 +58,6 @@ satellite-telemetry-dashboard/
 └── postgres
 ```
 
-
 # Backend Requirements
 
 ## Objective
@@ -62,9 +72,9 @@ Implement the following API endpoints:
 
 #### GET /telemetry: Retrieve all telemetry data.
 
-* Optional query parameters:
-    * satelliteId: Filter by satellite ID.
-    * status: Filter by health status (e.g., “healthy”, “critical”).
+- Optional query parameters:
+  - satelliteId: Filter by satellite ID.
+  - status: Filter by health status (e.g., “healthy”, “critical”).
 
 #### POST /telemetry: Add a new telemetry entry.
 
@@ -72,11 +82,11 @@ Request body should include:
 
 ```json
 {
- "satelliteId": "string",
- "timestamp": "ISO 8601 datetime",
- "altitude": "number",
- "velocity": "number",
- "status": "string"
+  "satelliteId": "string",
+  "timestamp": "ISO 8601 datetime",
+  "altitude": "number",
+  "velocity": "number",
+  "status": "string"
 }
 ```
 
@@ -86,26 +96,26 @@ Request body should include:
 
 ### 2. Data Storage
 
-* Use an in-memory database (e.g., SQLite, or a simple array for simplicity).
-* Ensure data persistence during runtime.
+- Use an in-memory database (e.g., SQLite, or a simple array for simplicity).
+- Ensure data persistence during runtime.
 
 ### 3. Validation
 
 Validate incoming data:
 
-* timestamp must be a valid ISO 8601 datetime.
-* altitude and velocity must be positive numbers.
+- timestamp must be a valid ISO 8601 datetime.
+- altitude and velocity must be positive numbers.
 
 ### 4. Implementation Details
 
-* Use a backend framework of your choice (e.g., Node.js with Express, Python with Flask/FastAPI, etc.).
-* Write clean, modular code with comments explaining key decisions.
+- Use a backend framework of your choice (e.g., Node.js with Express, Python with Flask/FastAPI, etc.).
+- Write clean, modular code with comments explaining key decisions.
 
 ### Bonus Features
 
-* Add pagination support to the GET /telemetry endpoint.
-* Implement unit tests for the API endpoints.
-* Include Docker support for easy deployment.
+- Add pagination support to the GET /telemetry endpoint.
+- Implement unit tests for the API endpoints.
+- Include Docker support for easy deployment.
 
 # Frontend Requirements
 
@@ -119,51 +129,51 @@ Design and implement a web interface to display and manage satellite telemetry d
 
 Build a web application with the following functionality:
 
-* Display a table of telemetry data with columns: Satellite ID, Timestamp, Altitude, Velocity, Health Status.
-* Allow users to filter telemetry data by Satellite ID and Health Status.
-* Provide a form to add new telemetry entries.
-* Allow users to delete telemetry entries.
+- Display a table of telemetry data with columns: Satellite ID, Timestamp, Altitude, Velocity, Health Status.
+- Allow users to filter telemetry data by Satellite ID and Health Status.
+- Provide a form to add new telemetry entries.
+- Allow users to delete telemetry entries.
 
 ### 2. Mock API or Backend Integration
 
-* You may use the backend API provided in the test or create a mock API for
-the frontend task.
-* If using a mock API, simulate the following endpoints:
-    * GET /telemetry: Returns a list of telemetry data.
-    * POST /telemetry: Accepts a new telemetry entry.
-    * DELETE /telemetry/:id: Deletes a telemetry entry.
+- You may use the backend API provided in the test or create a mock API for
+  the frontend task.
+- If using a mock API, simulate the following endpoints:
+  - GET /telemetry: Returns a list of telemetry data.
+  - POST /telemetry: Accepts a new telemetry entry.
+  - DELETE /telemetry/:id: Deletes a telemetry entry.
 
 ### 3. Design
 
-* Use a modern frontend framework (e.g., React, Angular, Vue).
-* Ensure the UI is responsive and user-friendly.
+- Use a modern frontend framework (e.g., React, Angular, Vue).
+- Ensure the UI is responsive and user-friendly.
 
 ### 4. Implementation Details
 
-* Use state management (e.g., React’s useState or Redux) to manage telemetry data
-* Validate form inputs before sending data to the backend or mock API.
+- Use state management (e.g., React’s useState or Redux) to manage telemetry data
+- Validate form inputs before sending data to the backend or mock API.
 
 ### Bonus Features
 
-* Add sorting functionality to the table (e.g., sort by Timestamp, Altitude, or Velocity).
-* Implement error handling for API requests (e.g., display error messages if the backend is unreachable).
-* Include unit tests for key components.
-* Add a loading spinner while fetching data from the backend or mock API.
+- Add sorting functionality to the table (e.g., sort by Timestamp, Altitude, or Velocity).
+- Implement error handling for API requests (e.g., display error messages if the backend is unreachable).
+- Include unit tests for key components.
+- Add a loading spinner while fetching data from the backend or mock API.
 
 # Submission Guidelines
 
 ## Backend Task
 
-* Provide a link to the repository containing the code.
-* Include instructions for running the API locally (e.g., npm install && npm start or python app.py).
-* If Docker is implemented, include a Dockerfile and instructions for running the container.
+- Provide a link to the repository containing the code.
+- Include instructions for running the API locally (e.g., npm install && npm start or python app.py).
+- If Docker is implemented, include a Dockerfile and instructions for running the container.
 
 ## Frontend Task
 
-* Provide a link to the repository containing the code.
-* Include instructions for running the app locally (e.g., npm install && npm start).
-* If applicable, provide a live demo link (e.g., deployed on Vercel, Netlify, etc.).
+- Provide a link to the repository containing the code.
+- Include instructions for running the app locally (e.g., npm install && npm start).
+- If applicable, provide a live demo link (e.g., deployed on Vercel, Netlify, etc.).
 
 ## Documentation
 
-* Include a short README file explaining your approach, any assumptions made, and how to test the application. 
+- Include a short README file explaining your approach, any assumptions made, and how to test the application.

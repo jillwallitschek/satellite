@@ -1,0 +1,14 @@
+{
+  // Spellcheck
+  "cSpell.words": [],
+  // TypeScript uses local version
+  "typescript.tsdk": "node_modules/typescript/lib",
+  // Formatting
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  // CSS linting
+  "stylelint.validate": ["css", "scss", "less"],
+  "[css]": { "editor.formatOnSave": true },
+  "[scss]": { "editor.formatOnSave": true },
+  "[less]": { "editor.formatOnSave": true }
+}

@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, MockedFunction } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { getTelemetry, addTelemetry, deleteTelemetry } from "../api";
 import { SatelliteStatus } from "../types/telemetry";
 
@@ -88,6 +88,7 @@ describe("api", () => {
       status: 201,
       data: goodMockEntry,
     });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { id, ...newTelemetry } = goodMockEntry;
     const response = await addTelemetry(newTelemetry);
     expect(response.success).toBe(true);
@@ -99,6 +100,7 @@ describe("api", () => {
       status: 201,
       data: missingKeyMockEntry,
     });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { id, ...newTelemetry } = goodMockEntry;
     const response = await addTelemetry(newTelemetry);
     expect(response.success).toBe(false);
@@ -106,6 +108,7 @@ describe("api", () => {
   });
 
   it("addTelemetry: invalid time provided", async () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { id, ...newTelemetry } = invalidTimeMockEntry;
     const response = await addTelemetry(newTelemetry);
     expect(response.success).toBe(false);

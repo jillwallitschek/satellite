@@ -58,7 +58,6 @@ export const addTelemetry = async (rawData: {
       : "",
   };
   const formatted = TelemetrySchema.omit({ id: true }).safeParse(data);
-  console.log(formatted);
   if (!formatted.success) {
     return {
       success: false,

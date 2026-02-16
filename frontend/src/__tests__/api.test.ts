@@ -118,11 +118,6 @@ describe("api", () => {
   it("addTelemetry: invalid time provided", async () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { id, ...newTelemetry } = invalidTimeMockEntry;
-    console.log({
-      ...newTelemetry,
-      altitude: newTelemetry.altitude.toString(),
-      velocity: newTelemetry.velocity.toString(),
-    });
     const response = await addTelemetry({
       ...newTelemetry,
       altitude: newTelemetry.altitude.toString(),

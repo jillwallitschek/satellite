@@ -283,7 +283,7 @@ export default function CustomTable<T extends string>(
             )}
             {!rows.length && (
               <TableRow>
-                <TableCell>Oops! Looks like there's no data yet</TableCell>
+                <TableCell>Oops! Looks like there's no data.</TableCell>
               </TableRow>
             )}
           </TableBody>

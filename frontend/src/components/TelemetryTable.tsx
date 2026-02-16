@@ -115,7 +115,7 @@ export default function TelemetryTable({
           },
         ]}
         defaultOrder="satelliteId"
-        defaultOrderDirection="desc"
+        defaultOrderDirection="asc"
         rows={telemetry.map((t) => ({
           ...t,
           rowId: t.id,

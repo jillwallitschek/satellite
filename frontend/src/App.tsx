@@ -55,7 +55,7 @@ function App() {
         </Box>
       )}
 
-      <Container>
+      <Container sx={{ gap: 2, display: "flex", flexDirection: "column" }}>
         <Typography variant="h4" sx={{ mt: 4 }}>
           Satellite Telemetry Dashboard
         </Typography>

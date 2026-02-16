@@ -7,7 +7,7 @@ import {
   Button,
 } from "@mui/material";
 import { Alert } from "@mui/material";
-import { useState } from "react";
+import React, { useState } from "react";
 
 type Props = {
   open: boolean;
@@ -15,7 +15,7 @@ type Props = {
   onAction: () => Promise<void>;
   closeButtonText: string;
   dialogTitle: string;
-  dialogContentText: string;
+  dialogContent: React.ReactNode;
   actionButtonText: string;
   error: string | null;
 };
@@ -32,7 +32,7 @@ export default function CustomModal({
   closeButtonText,
   actionButtonText,
   dialogTitle,
-  dialogContentText,
+  dialogContent,
   error,
 }: Props) {
   const [loading, setLoading] = useState<boolean>(false);
@@ -43,7 +43,7 @@ export default function CustomModal({
         <DialogTitle>{dialogTitle}</DialogTitle>
 
         <DialogContent>
-          <DialogContentText>{dialogContentText}</DialogContentText>
+          <DialogContentText>{dialogContent}</DialogContentText>
         </DialogContent>
 
         <DialogActions>

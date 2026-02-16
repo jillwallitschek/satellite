@@ -42,10 +42,23 @@ export const getTelemetry = async (
  * @param data - telemetry data
  * @returns - response
  */
-export const addTelemetry = async (
-  data: Omit<Telemetry, "id">,
-): Promise<Response<Telemetry>> => {
+export const addTelemetry = async (rawData: {
+  satelliteId: string;
+  timestamp: string;
+  altitude: string;
+  velocity: string;
+  status: string;
+}): Promise<Response<Telemetry>> => {
+  const data = {
+    ...rawData,
+    velocity: Number(rawData.velocity),
+    altitude: Number(rawData.velocity),
+    timestamp: rawData.timestamp
+      ? new Date(rawData.timestamp).toISOString()
+      : "",
+  };
   const formatted = TelemetrySchema.omit({ id: true }).safeParse(data);
+  console.log(formatted);
   if (!formatted.success) {
     return {
       success: false,

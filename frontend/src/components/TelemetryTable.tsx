@@ -43,7 +43,7 @@ export default function TelemetryTable({
         open={deleteTarget !== null}
         onClose={() => setDeleteTarget(null)}
         dialogTitle={`Delete ${deleteTarget?.satelliteId ?? "this telemetry"}`}
-        dialogContentText="Are you sure you want to delete this entry? This action cannot be
+        dialogContent="Are you sure you want to delete this entry? This action cannot be
             undone."
         actionButtonText="Delete"
         onAction={handleDelete}

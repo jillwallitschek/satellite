@@ -54,10 +54,16 @@ type FilterTableProps<T extends string> = {
 };
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
-  if (b[orderBy] < a[orderBy]) {
+  const aOrderByRaw = a[orderBy];
+  const bOrderByRaw = b[orderBy];
+  const aOrderBy =
+    typeof aOrderByRaw === "string" ? aOrderByRaw.toLowerCase() : aOrderByRaw;
+  const bOrderBy =
+    typeof bOrderByRaw === "string" ? bOrderByRaw.toLowerCase() : bOrderByRaw;
+  if (bOrderBy < aOrderBy) {
     return -1;
   }
-  if (b[orderBy] > a[orderBy]) {
+  if (bOrderBy > aOrderBy) {
     return 1;
   }
   return 0;
@@ -202,7 +208,7 @@ export default function CustomTable<T extends string>(
       searchableHeaderCells.some((cell) => {
         const value = row[cell.id];
         if (cell.dataType === "date") {
-          const formatted = formatDate(value as DateLike)?.toLowerCase() ?? "";
+          const formatted = formatDate(value as DateLike)?.toString() ?? "";
           return formatted.includes(searchQuery);
         }
         return String(value).toLowerCase().includes(searchQuery);

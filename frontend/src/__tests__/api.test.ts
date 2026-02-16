@@ -44,7 +44,7 @@ const missingKeyMockEntry = {
 const invalidTimeMockEntry = {
   id: "2597e6f6-4a86-4e33-9de5-09b0a50e96a4",
   satelliteId: "SAT-ALPHA",
-  timestamp: "2026-02-14",
+  timestamp: "",
   altitude: 400.0,
   velocity: 27600.0,
   status: "healthy" as SatelliteStatus,
@@ -90,7 +90,11 @@ describe("api", () => {
     });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { id, ...newTelemetry } = goodMockEntry;
-    const response = await addTelemetry(newTelemetry);
+    const response = await addTelemetry({
+      ...newTelemetry,
+      altitude: newTelemetry.altitude.toString(),
+      velocity: newTelemetry.velocity.toString(),
+    });
     expect(response.success).toBe(true);
     expect(response.data).toEqual(goodMockEntry);
   });
@@ -102,7 +106,11 @@ describe("api", () => {
     });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { id, ...newTelemetry } = goodMockEntry;
-    const response = await addTelemetry(newTelemetry);
+    const response = await addTelemetry({
+      ...newTelemetry,
+      altitude: newTelemetry.altitude.toString(),
+      velocity: newTelemetry.velocity.toString(),
+    });
     expect(response.success).toBe(false);
     expect(response.message).toEqual("Invalid response format");
   });
@@ -110,7 +118,16 @@ describe("api", () => {
   it("addTelemetry: invalid time provided", async () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { id, ...newTelemetry } = invalidTimeMockEntry;
-    const response = await addTelemetry(newTelemetry);
+    console.log({
+      ...newTelemetry,
+      altitude: newTelemetry.altitude.toString(),
+      velocity: newTelemetry.velocity.toString(),
+    });
+    const response = await addTelemetry({
+      ...newTelemetry,
+      altitude: newTelemetry.altitude.toString(),
+      velocity: newTelemetry.velocity.toString(),
+    });
     expect(response.success).toBe(false);
     expect(response.message).toEqual("Invalid data provided");
   });

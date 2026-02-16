@@ -12,5 +12,11 @@ export function formatDate(dateLike: DateLike): string {
     return "";
   }
   const date = typeof dateLike === "number" ? new Date(dateLike) : dateLike;
-  return format(date, "MM/dd/yyyyy");
+  return format(date, "MM/dd/yyyy");
+}
+
+export function isValidDate(value: string | undefined) {
+  if (!value) return false;
+  const date = new Date(value);
+  return !isNaN(date.getTime());
 }

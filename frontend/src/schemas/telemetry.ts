@@ -1,7 +1,7 @@
 import { SatelliteStatus } from "@/types/telemetry";
 import { z } from "zod";
 
-const statusArray: SatelliteStatus[] = ["healthy", "critical"];
+const statusArray: SatelliteStatus[] = ["healthy", "critical"] as const;
 
 export const TelemetrySchema = z.object({
   id: z.string().uuid(), // UUID string

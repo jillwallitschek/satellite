@@ -1,86 +1,108 @@
-import { useState } from "react";
-import { TextField, Button, Stack } from "@mui/material";
-import { Telemetry } from "../types/telemetry";
 import { addTelemetry } from "../api";
+import CustomFormModal from "./forms/CustomFormModal";
+import { TelemetrySchema } from "../schemas/telemetry";
+import { getInputs } from "./forms/inputs";
+import { isValidDate } from "../utils/date";
 
 type Props = {
-  onSuccess: () => void;
+  beforeCreate: () => void;
+  afterCreate: () => Promise<void>;
 };
 
-const TelemetryForm: React.FC<Props> = ({ onSuccess }) => {
-  const [form, setForm] = useState<Omit<Telemetry, "id">>({
-    satelliteId: "",
-    timestamp: "",
-    altitude: 0,
-    velocity: 0,
-    status: "healthy"
-  });
+const isPositive = (val: string | undefined) => {
+  const num = Number(val);
+  if (isNaN(num)) return false;
+  return num > 0;
+};
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm(prev => ({
-      ...prev,
-      [name]: name === "altitude" || name === "velocity" ? Number(value) : value
-    }));
-  };
+const inputs = getInputs([
+  {
+    id: "satelliteId",
+    inputType: "string",
+    label: "Satellite id",
+    invalid: (value) => {
+      const parse = TelemetrySchema.shape.satelliteId.safeParse(value);
+      return parse.success
+        ? { invalid: false }
+        : { invalid: true, message: "Enter any id" };
+    },
+  },
+  {
+    id: "timestamp",
+    inputType: "date",
+    label: "Timestamp",
+    invalid: (value) => {
+      return isValidDate(value as string)
+        ? { invalid: false }
+        : { invalid: true, message: "Enter any date" };
+    },
+  },
+  {
+    id: "altitude",
+    inputType: "number",
+    label: "Altitude",
+    invalid: (value) => {
+      const isPositiveNumber = isPositive(value);
+      return isPositiveNumber
+        ? { invalid: false }
+        : { invalid: true, message: "Enter a positive number" };
+    },
+  },
+  {
+    id: "velocity",
+    inputType: "number",
+    label: "Velocity",
+    invalid: (value) => {
+      const isPositiveNumber = isPositive(value);
+      return isPositiveNumber
+        ? { invalid: false }
+        : { invalid: true, message: "Enter a positive number" };
+    },
+  },
+  {
+    id: "status",
+    inputType: "string",
+    defaultValue: "healthy",
+    label: "Health",
+    invalid: (value) => {
+      if (!value || !["critical", "healthy"].includes(value as string)) {
+        return {
+          invalid: true,
+          message: "Enter 'healthy' or 'critical'",
+        };
+      }
+      return { invalid: false };
+    },
+  },
+] as const);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    await addTelemetry(form);
-    onSuccess();
-    setForm({
-      satelliteId: "",
-      timestamp: "",
-      altitude: 0,
-      velocity: 0,
-      status: "healthy"
-    });
-  };
-
+/**
+ * A modal that when open allows you to add new telemetry data
+ * @param props
+ * @returns react modal
+ */
+export default function TelemetryFormModal({
+  beforeCreate,
+  afterCreate,
+}: Props) {
   return (
-    <form onSubmit={handleSubmit}>
-      <Stack spacing={2} direction={{ xs: "column", sm: "row" }} sx={{ mt: 2 }}>
-        <TextField
-          label="Satellite ID"
-          name="satelliteId"
-          value={form.satelliteId}
-          onChange={handleChange}
-          required
-        />
-        <TextField
-          type="datetime-local"
-          name="timestamp"
-          value={form.timestamp}
-          onChange={handleChange}
-          required
-        />
-        <TextField
-          type="number"
-          label="Altitude"
-          name="altitude"
-          value={form.altitude}
-          onChange={handleChange}
-          required
-        />
-        <TextField
-          type="number"
-          label="Velocity"
-          name="velocity"
-          value={form.velocity}
-          onChange={handleChange}
-          required
-        />
-        <TextField
-          label="Status"
-          name="status"
-          value={form.status}
-          onChange={handleChange}
-          required
-        />
-        <Button type="submit" variant="contained">Add</Button>
-      </Stack>
-    </form>
+    <CustomFormModal
+      dialogTitle="Add telemetry data"
+      onSubmitButtonText="Create"
+      openDialogButtonText="Add"
+      beforeSubmit={beforeCreate}
+      afterSubmit={afterCreate}
+      onSubmit={async (formResponse) => {
+        const data = formResponse.reduce(
+          (acc, input) => {
+            return { ...acc, [input.id]: input.value };
+          },
+          {} as Record<(typeof inputs)[number]["id"], string>,
+        );
+        const response = await addTelemetry(data);
+        return response.success ? { ...response, data: null } : response;
+      }}
+      inputs={inputs}
+    />
   );
-};
-
-export default TelemetryForm;
+}

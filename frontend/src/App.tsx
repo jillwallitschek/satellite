@@ -54,21 +54,35 @@ function App() {
           <CircularProgress sx={{ transform: "scale(2.5)" }} />
         </Box>
       )}
-
-      <Container sx={{ gap: 2, display: "flex", flexDirection: "column" }}>
-        <Typography variant="h4" sx={{ mt: 4 }}>
-          Satellite Telemetry Dashboard
-        </Typography>
-
+      <Container
+        sx={{
+          gap: 2,
+          display: "flex",
+          flexDirection: "column",
+          alignSelf: "stretch",
+        }}
+      >
+        <Box
+          sx={{
+            gap: 2,
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            alignItems: { xs: "baseline", sm: "end" },
+            margin: "10px",
+          }}
+        >
+          <Typography variant="h4" sx={{ mt: 4 }}>
+            Satellite Telemetry Dashboard
+          </Typography>
+          <TelemetryForm
+            afterCreate={fetchTelemetry}
+            beforeCreate={() => setLoading(true)}
+          />
+        </Box>
         {error && <Alert severity="error">{error}</Alert>}
-
-        <TelemetryForm onSuccess={fetchTelemetry} />
-
         <TelemetryTable
           telemetry={telemetry}
-          beforeDelete={() => {
-            setLoading(true);
-          }}
+          beforeDelete={() => setLoading(true)}
           afterDelete={fetchTelemetry}
         />
       </Container>

@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { Container, Typography, CircularProgress, Alert } from "@mui/material";
+import {
+  Container,
+  Typography,
+  CircularProgress,
+  Alert,
+  Box,
+} from "@mui/material";
 
 import { Telemetry } from "./types/telemetry";
 import { getTelemetry } from "./api";
@@ -32,6 +38,23 @@ function App() {
 
   return (
     <CustomThemeProvider>
+      {loading && (
+        <Box
+          sx={{
+            position: "absolute",
+            width: "100vw",
+            height: "100vh",
+            top: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 10,
+          }}
+        >
+          <CircularProgress sx={{ transform: "scale(2.5)" }} />
+        </Box>
+      )}
+
       <Container>
         <Typography variant="h4" sx={{ mt: 4 }}>
           Satellite Telemetry Dashboard
@@ -41,9 +64,13 @@ function App() {
 
         <TelemetryForm onSuccess={fetchTelemetry} />
 
-        {loading && <CircularProgress />}
-
-        <TelemetryTable telemetry={telemetry} onDelete={fetchTelemetry} />
+        <TelemetryTable
+          telemetry={telemetry}
+          beforeDelete={() => {
+            setLoading(true);
+          }}
+          afterDelete={fetchTelemetry}
+        />
       </Container>
     </CustomThemeProvider>
   );

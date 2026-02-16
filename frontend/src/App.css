@@ -2,5 +2,10 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
+  display: flex;
+  place-items: center;
+  align-items: stretch;
+  justify-content: stretch;
+  flex-direction: column;
+  box-sizing: border-box;
 }

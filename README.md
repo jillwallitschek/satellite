@@ -7,9 +7,8 @@ health status. The system allows users to view, filter, and add new telemetry en
 
 Note: Project was developed in WSL 2
 
-1. `cd ~` (Do NOT clone in windows file system)
 1. `git clone https://github.com/jillwallitschek/satellite.git`
-1. Be sure docker is installed using https://docs.docker.com/compose/install/ and enable WSL 2
+1. Be sure docker is installed using https://docs.docker.com/compose/install/
 1. Be sure docker compose is installed using https://docs.docker.com/engine/install/
 1. Check docker desktop is running
 1. Copy `.env.example` to `.env` in the root directory. No need to update values. For ease of testing they are set in the example.

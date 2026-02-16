@@ -3,16 +3,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Telemetry } from "../types/telemetry";
 import { deleteTelemetry } from "../api";
 import CustomTable from "./CustomTable";
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  Button,
-} from "@mui/material";
 import { useState } from "react";
-import { Alert } from "@mui/material";
+import CustomModal from "./CustomModal";
 
 type Props = {
   telemetry: Telemetry[];
@@ -40,47 +32,24 @@ export default function TelemetryTable({
     if (!response.success) {
       setDeleteError(response.message);
     } else {
-      afterDelete();
       setDeleteTarget(null);
     }
+    afterDelete();
   };
 
   return (
     <>
-      <Dialog
+      <CustomModal
         open={deleteTarget !== null}
         onClose={() => setDeleteTarget(null)}
-      >
-        <DialogTitle>
-          Delete {deleteTarget?.satelliteId ?? "this telemetry"}
-        </DialogTitle>
-
-        <DialogContent>
-          <DialogContentText>
-            Are you sure you want to delete this entry? This action cannot be
-            undone.
-          </DialogContentText>
-        </DialogContent>
-
-        <DialogActions>
-          <Button
-            onClick={() => {
-              setDeleteTarget(null);
-            }}
-          >
-            Cancel
-          </Button>
-          <Button onClick={handleDelete} color="error" variant="contained">
-            Delete
-          </Button>
-        </DialogActions>
-        {deleteError && (
-          <Alert severity="error" sx={{ mt: 2, background: "transparent" }}>
-            {deleteError}
-          </Alert>
-        )}
-      </Dialog>
-      ;
+        dialogTitle={`Delete ${deleteTarget?.satelliteId ?? "this telemetry"}`}
+        dialogContentText="Are you sure you want to delete this entry? This action cannot be
+            undone."
+        actionButtonText="Delete"
+        onAction={handleDelete}
+        error={deleteError}
+        closeButtonText="Cancel"
+      />
       <CustomTable
         headerCells={[
           {
